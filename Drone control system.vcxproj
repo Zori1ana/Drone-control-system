@@ -139,10 +139,12 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Assignment.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="Task.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Assignment.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Task.cpp" />
   </ItemGroup>
