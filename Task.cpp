@@ -2,6 +2,7 @@
 #include <ostream>
 #include <stdexcept>
 #include <utility>
+#include <cmath>
 
 std::string toString(TaskState state) {
     switch (state) {
@@ -14,13 +15,24 @@ std::string toString(TaskState state) {
     return "невідомий стан";
 }
 Task::Task(int id, std::string name, double x, double y, int priority, double duration, double resourceRequired)
-    : id_(id), name_(std::move(name)), x_(x), y_(y), priority_(priority), duration_(duration), resourceRequired_(resourceRequired), state_(TaskState::Pending) {
-    if (priority < MIN_PRIORITY || priority > MAX_PRIORITY)
-        throw std::invalid_argument("Пріоритет має бути в межах від 1 до 5");
-    if (duration < 0.0)
-        throw std::invalid_argument("Тривалість не може бути від'ємною");
-    if (resourceRequired < 0.0)
-        throw std::invalid_argument("Потреба в ресурсі не може бути від'ємною");
+    : id_(id), name_(std::move(name)), x_(x), y_(y), priority_(priority), duration_(duration), resourceRequired_(resourceRequired), state_(TaskState::Pending)
+{
+        if (id < 0)
+            throw std::invalid_argument("Ідентифікатор не може бути від'ємним");
+        if (name_.find_first_not_of(" \t\n\r") == std::string::npos)
+            throw std::invalid_argument("Назва не може бути порожньою");
+        if (!std::isfinite(x) || !std::isfinite(y))
+            throw std::invalid_argument("Координати мають бути скінченними числами");
+        if (priority < MIN_PRIORITY || priority > MAX_PRIORITY)
+            throw std::invalid_argument("Пріоритет має бути в межах від 1 до 5");
+        if (!std::isfinite(duration))
+            throw std::invalid_argument("Тривалість має бути скінченним числом");
+        if (duration < 0.0)
+            throw std::invalid_argument("Тривалість не може бути від'ємною");
+        if (!std::isfinite(resourceRequired))
+            throw std::invalid_argument("Потреба в ресурсі має бути скінченним числом");
+        if (resourceRequired < 0.0)
+            throw std::invalid_argument("Потреба в ресурсі не може бути від'ємною");
 }
 int Task::getId() const { return id_; }
 const std::string& Task::getName() const { return name_; }
