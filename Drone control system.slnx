@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Drone control system.vcxproj" Id="735988b1-c9a3-435d-90a0-400f938b28d8" />
+</Solution>
